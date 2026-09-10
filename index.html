@@ -362,7 +362,109 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
 .wa-float .lbl{display:none}
 @media (min-width:520px){.wa-float .lbl{display:inline}}
 @media (prefers-reduced-motion:reduce){.wa-float:hover{transform:none}}
-</style>
+
+/* ============================================================
+   DIAGNÓSTICO INTERATIVO
+   ============================================================ */
+.diag-wrap{
+  margin-top:clamp(30px,4vw,42px);
+  background:var(--ink);
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 18px 50px rgba(6,23,38,.22);
+}
+.diag-top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px clamp(20px,3vw,34px);
+  border-bottom:1px solid #1C3550;
+}
+.diag-top-l{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.diag-steps{display:flex;gap:7px;align-items:center}
+.diag-tri{
+  width:0;height:0;
+  border-left:7px solid transparent;border-right:7px solid transparent;
+  border-bottom:12px solid #24405C;
+  transition:border-bottom-color .3s ease;
+}
+.diag-tri.on{border-bottom-color:var(--gold)}
+.diag-count{font-family:var(--f-mono);font-size:11.5px;color:#7E97AE;margin-left:6px;font-variant-numeric:tabular-nums}
+
+.diag-body{padding:clamp(26px,4vw,44px) clamp(20px,3vw,34px)}
+.diag-q{
+  font-family:var(--f-display);color:#fff;
+  font-size:clamp(21px,3.2vw,28px);line-height:1.25;
+}
+.diag-hint{margin-top:8px;font-size:13.5px;color:#7E97AE}
+
+.diag-opts{display:grid;gap:10px;margin-top:clamp(22px,3vw,30px)}
+@media (min-width:700px){.diag-opts.two{grid-template-columns:1fr 1fr}}
+.diag-opt{
+  display:flex;align-items:flex-start;gap:13px;
+  background:#0C2338;border:1px solid #1E3A56;border-radius:6px;
+  padding:15px 17px;cursor:pointer;
+  transition:border-color .15s ease,background .15s ease,transform .12s ease;
+}
+.diag-opt:hover{border-color:var(--gold);background:#102B44}
+.diag-opt:active{transform:scale(.995)}
+.diag-opt input{position:absolute;opacity:0;width:0;height:0}
+.diag-mark{
+  width:19px;height:19px;flex:none;margin-top:2px;border-radius:50%;
+  border:2px solid #3A5A78;
+  display:grid;place-items:center;transition:border-color .15s ease;
+}
+.diag-mark::after{
+  content:"";width:9px;height:9px;border-radius:50%;background:var(--gold);
+  transform:scale(0);transition:transform .15s ease;
+}
+.diag-opt input:checked ~ .diag-mark{border-color:var(--gold)}
+.diag-opt input:checked ~ .diag-mark::after{transform:scale(1)}
+.diag-opt input:focus-visible ~ .diag-mark{outline:2px solid var(--gold);outline-offset:3px}
+.diag-opt-tx{font-size:15px;color:#DCE6EF;line-height:1.45}
+.diag-opt-tx small{display:block;font-size:12.5px;color:#7E97AE;margin-top:2px}
+
+.diag-nav{display:flex;align-items:center;gap:12px;margin-top:clamp(24px,3vw,32px);flex-wrap:wrap}
+.diag-btn{
+  border:none;font-family:inherit;font-size:15px;font-weight:600;
+  padding:13px 26px;border-radius:5px;cursor:pointer;
+  background:var(--gold);color:var(--ink);
+  transition:background .15s ease,transform .15s ease;
+}
+.diag-btn:hover:not(:disabled){background:var(--gold-hi);transform:translateY(-2px)}
+.diag-btn:disabled{opacity:.35;cursor:not-allowed}
+.diag-back{
+  background:none;border:none;color:#7E97AE;font-family:inherit;font-size:14px;
+  cursor:pointer;padding:10px 4px;text-decoration:underline;text-underline-offset:3px;
+}
+.diag-back:hover{color:var(--gold)}
+@media (prefers-reduced-motion:reduce){.diag-btn:hover{transform:none}}
+
+/* resultado */
+.diag-res-h{font-family:var(--f-display);color:#fff;font-size:clamp(22px,3.4vw,30px);line-height:1.22}
+.diag-res-sub{margin-top:12px;font-size:15px;color:#A9BDCF;max-width:58ch}
+.diag-findings{display:grid;gap:12px;margin-top:26px}
+.finding{
+  display:flex;gap:14px;align-items:flex-start;
+  background:#0C2338;border:1px solid #1E3A56;border-radius:6px;padding:17px 19px;
+  border-left:3px solid var(--gold);
+}
+.finding.op{border-left-color:var(--sky)}
+.finding.inf{border-left-color:#3A5A78}
+.f-ico{
+  width:0;height:0;flex:none;margin-top:5px;
+  border-left:6px solid transparent;border-right:6px solid transparent;
+  border-bottom:10px solid var(--gold);
+}
+.finding.op .f-ico{border-bottom-color:var(--sky)}
+.finding.inf .f-ico{border-bottom-color:#5B7590}
+.f-tx b{display:block;color:#fff;font-family:var(--f-display);font-size:16.5px;margin-bottom:5px}
+.f-tx span{font-size:14px;color:#A9BDCF;line-height:1.55}
+
+.diag-cta{
+  margin-top:28px;padding-top:24px;border-top:1px solid #1C3550;
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+}
+.diag-disc{margin-top:20px;font-size:12px;color:#66809A;line-height:1.6;font-style:italic}
+.diag-hidden{display:none}</style>
 </head>
 <body>
 
@@ -371,6 +473,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   <div class="nav-in">
     <a class="nav-brand" href="#topo">Tríade <span>M</span></a>
     <div class="nav-links">
+      <a href="#diagnostico">Diagnóstico</a>
       <a href="#como">Como trabalho</a>
       <a href="#servicos">Serviços</a>
       <a href="#reforma">Reforma Tributária</a>
@@ -395,7 +498,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="https://wa.me/5511964919848">Conversar no WhatsApp</a>
-          <a class="btn btn-ghost" href="#como">Como eu trabalho</a>
+          <a class="btn btn-ghost" href="#diagnostico">Fazer diagnóstico gratuito</a>
         </div>
 
         <div class="trust">
@@ -452,6 +555,54 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
       <div class="pain">
         <q>Descobri uma dívida que eu nem sabia que existia.</q>
         <p>Débito antigo acumulando multa e juros em silêncio, e a certidão negativa travando quando você mais precisa dela.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIAGNÓSTICO ============ -->
+<section class="section" id="diagnostico">
+  <div class="wrap">
+    <p class="eyebrow">Diagnóstico gratuito</p>
+    <h2>Descubra em 1 minuto o que merece sua atenção</h2>
+    <p class="section-intro">
+      Seis perguntas rápidas. No fim, você recebe os pontos específicos da sua situação —
+      e, se quiser, já fala comigo com tudo isso na mão.
+    </p>
+
+    <div class="diag-wrap">
+      <div class="diag-top">
+        <span class="diag-top-l">Diagnóstico Tríade M</span>
+        <div class="diag-steps" id="diagSteps" aria-hidden="true"></div>
+      </div>
+
+      <div class="diag-body">
+        <!-- PERGUNTAS -->
+        <div id="diagQuiz" aria-live="polite">
+          <h3 class="diag-q" id="diagQ">Carregando…</h3>
+          <p class="diag-hint" id="diagHint"></p>
+          <div class="diag-opts" id="diagOpts"></div>
+          <div class="diag-nav">
+            <button class="diag-btn" id="diagNext" type="button" disabled>Continuar</button>
+            <button class="diag-back diag-hidden" id="diagBack" type="button">← Voltar</button>
+          </div>
+        </div>
+
+        <!-- RESULTADO -->
+        <div id="diagResult" class="diag-hidden">
+          <h3 class="diag-res-h" id="diagResH">Seu diagnóstico</h3>
+          <p class="diag-res-sub" id="diagResSub"></p>
+          <div class="diag-findings" id="diagFindings"></div>
+          <div class="diag-cta">
+            <a class="btn btn-primary" id="diagWa" href="#">💬 Falar comigo sobre isso</a>
+            <button class="diag-back" id="diagRedo" type="button">Refazer o diagnóstico</button>
+          </div>
+          <p class="diag-disc">
+            Esta é uma orientação preliminar, gerada a partir das suas respostas — não substitui
+            a análise da sua documentação. Para um parecer preciso é necessário verificar o
+            relatório de situação fiscal e os dados contábeis da empresa.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -767,6 +918,341 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
 <a class="wa-float" href="https://wa.me/5511964919848" aria-label="Falar no WhatsApp">
   <span aria-hidden="true">💬</span><span class="lbl">WhatsApp</span>
 </a>
+
+<script>
+(function(){
+  "use strict";
+
+  var PERGUNTAS = [
+    {
+      id:"situacao",
+      q:"Qual a sua situação hoje?",
+      hint:"Isso define quase todo o resto da análise.",
+      two:true,
+      opts:[
+        {v:"nao_abriu", t:"Ainda não abri empresa", s:"Penso em formalizar"},
+        {v:"mei",       t:"Sou MEI"},
+        {v:"simples",   t:"Tenho ME/EPP no Simples Nacional"},
+        {v:"presumido", t:"Lucro Presumido ou Lucro Real"}
+      ]
+    },
+    {
+      id:"faturamento",
+      q:"Qual o faturamento aproximado dos últimos 12 meses?",
+      hint:"Some tudo o que entrou, antes de descontar custos.",
+      two:true,
+      opts:[
+        {v:"zero",  t:"Ainda não faturo"},
+        {v:"ate81", t:"Até R$ 81 mil",              s:"limite do MEI"},
+        {v:"ate360",t:"De R$ 81 mil a R$ 360 mil",  s:"faixa de microempresa"},
+        {v:"ate4m", t:"De R$ 360 mil a R$ 4,8 mi",  s:"faixa de EPP"},
+        {v:"acima", t:"Acima de R$ 4,8 milhões",    s:"acima do teto do Simples"}
+      ]
+    },
+    {
+      id:"funcionarios",
+      q:"Você tem funcionário registrado?",
+      hint:"Contrate ou não, isso muda suas obrigações mensais.",
+      two:true,
+      opts:[
+        {v:"nenhum", t:"Nenhum"},
+        {v:"um",     t:"Um funcionário"},
+        {v:"varios", t:"Dois ou mais"},
+        {v:"prolab", t:"Só eu, com pró-labore"}
+      ]
+    },
+    {
+      id:"atividade",
+      q:"Qual a sua atividade principal?",
+      hint:"Serviço e comércio são tributados de formas bem diferentes.",
+      two:true,
+      opts:[
+        {v:"servico",  t:"Prestação de serviços"},
+        {v:"comercio", t:"Comércio / revenda"},
+        {v:"industria",t:"Indústria / produção"},
+        {v:"misto",    t:"Misto"}
+      ]
+    },
+    {
+      id:"receita",
+      q:"Como está a sua situação na Receita Federal?",
+      hint:"Sem julgamento — a maioria não sabe responder com certeza.",
+      two:true,
+      opts:[
+        {v:"ok",         t:"Tudo em dia"},
+        {v:"pendencia",  t:"Tenho pendência em aberto"},
+        {v:"parcelado",  t:"Tenho parcelamento ativo"},
+        {v:"naosei",     t:"Não sei / nunca verifiquei"}
+      ]
+    },
+    {
+      id:"preocupacao",
+      q:"O que mais te preocupa hoje?",
+      hint:"Escolha o que mais pesa no momento.",
+      two:true,
+      opts:[
+        {v:"imposto",  t:"Achar que pago imposto demais"},
+        {v:"regular",  t:"Regularizar pendências"},
+        {v:"abrir",    t:"Abrir ou formalizar a empresa"},
+        {v:"reforma",  t:"O impacto da Reforma Tributária"},
+        {v:"contador", t:"Meu contador não me atende bem"}
+      ]
+    }
+  ];
+
+  var TOTAL = PERGUNTAS.length;
+  var idx = 0;
+  var resp = {};
+
+  var elSteps = document.getElementById("diagSteps");
+  var elQ     = document.getElementById("diagQ");
+  var elHint  = document.getElementById("diagHint");
+  var elOpts  = document.getElementById("diagOpts");
+  var elNext  = document.getElementById("diagNext");
+  var elBack  = document.getElementById("diagBack");
+  var elQuiz  = document.getElementById("diagQuiz");
+  var elRes   = document.getElementById("diagResult");
+
+  // --- progresso em triângulos ---
+  for (var i = 0; i < TOTAL; i++) {
+    var t = document.createElement("span");
+    t.className = "diag-tri";
+    elSteps.appendChild(t);
+  }
+  var elCount = document.createElement("span");
+  elCount.className = "diag-count";
+  elSteps.appendChild(elCount);
+
+  function pintarProgresso(){
+    var tris = elSteps.querySelectorAll(".diag-tri");
+    for (var i = 0; i < tris.length; i++) {
+      if (i <= idx) { tris[i].classList.add("on"); } else { tris[i].classList.remove("on"); }
+    }
+    elCount.textContent = (idx + 1) + " / " + TOTAL;
+  }
+
+  function render(){
+    var p = PERGUNTAS[idx];
+    elQ.textContent = p.q;
+    elHint.textContent = p.hint || "";
+    elOpts.className = "diag-opts" + (p.two ? " two" : "");
+    elOpts.innerHTML = "";
+
+    p.opts.forEach(function(o){
+      var lab = document.createElement("label");
+      lab.className = "diag-opt";
+
+      var inp = document.createElement("input");
+      inp.type = "radio";
+      inp.name = p.id;
+      inp.value = o.v;
+      if (resp[p.id] === o.v) { inp.checked = true; }
+      inp.addEventListener("change", function(){
+        resp[p.id] = o.v;
+        elNext.disabled = false;
+      });
+
+      var mark = document.createElement("span");
+      mark.className = "diag-mark";
+
+      var tx = document.createElement("span");
+      tx.className = "diag-opt-tx";
+      tx.appendChild(document.createTextNode(o.t));
+      if (o.s) {
+        var sm = document.createElement("small");
+        sm.textContent = o.s;
+        tx.appendChild(sm);
+      }
+
+      lab.appendChild(inp);
+      lab.appendChild(mark);
+      lab.appendChild(tx);
+      elOpts.appendChild(lab);
+    });
+
+    elNext.disabled = !resp[p.id];
+    elNext.textContent = (idx === TOTAL - 1) ? "Ver meu diagnóstico" : "Continuar";
+    if (idx > 0) { elBack.classList.remove("diag-hidden"); } else { elBack.classList.add("diag-hidden"); }
+    pintarProgresso();
+  }
+
+  elNext.addEventListener("click", function(){
+    if (idx < TOTAL - 1) { idx++; render(); }
+    else { mostrarResultado(); }
+  });
+  elBack.addEventListener("click", function(){
+    if (idx > 0) { idx--; render(); }
+  });
+
+  // ---------------------------------------------------------
+  // REGRAS
+  // ---------------------------------------------------------
+  function analisar(r){
+    var f = [];
+
+    // MEI acima do limite de faturamento
+    if (r.situacao === "mei" && (r.faturamento === "ate360" || r.faturamento === "ate4m" || r.faturamento === "acima")) {
+      f.push({k:"at", b:"Você provavelmente ultrapassou o limite do MEI",
+        s:"O teto do MEI é de R$ 81 mil por ano. Acima disso o desenquadramento é obrigatório e retroativo — a diferença de imposto é cobrada desde o início do excesso. Resolver agora custa menos do que esperar a Receita cobrar."});
+    }
+
+    // MEI com mais de um funcionário
+    if (r.situacao === "mei" && r.funcionarios === "varios") {
+      f.push({k:"at", b:"MEI só pode ter um funcionário",
+        s:"Com dois ou mais registrados, o enquadramento como MEI não se sustenta. É preciso migrar para ME antes que isso vire autuação."});
+    }
+
+    // MEI perto do limite
+    if (r.situacao === "mei" && r.faturamento === "ate81") {
+      f.push({k:"inf", b:"Acompanhe de perto o limite anual",
+        s:"Vale controlar o acumulado mês a mês. Quem descobre o estouro só na declaração anual costuma pagar multa que daria para evitar."});
+    }
+
+    // Fator R — serviços no Simples
+    if (r.situacao === "simples" && (r.atividade === "servico" || r.atividade === "misto")) {
+      f.push({k:"op", b:"O Fator R pode reduzir bastante seu imposto",
+        s:"Para várias atividades de serviço, se a folha (incluindo pró-labore) representar 28% ou mais da receita dos últimos 12 meses, a tributação passa do Anexo V para o Anexo III. A diferença na alíquota costuma superar 5 pontos percentuais. Vale checar se o seu caso se enquadra."});
+    }
+
+    // pró-labore ausente em serviços
+    if ((r.situacao === "simples" || r.situacao === "presumido") && r.funcionarios === "nenhum" && (r.atividade === "servico" || r.atividade === "misto")) {
+      f.push({k:"at", b:"Empresa sem pró-labore registrado",
+        s:"Sócio que trabalha na empresa deve ter pró-labore com INSS recolhido. Além de ser exigência legal, no Simples ele entra no cálculo do Fator R — ou seja, pode até reduzir seu imposto total."});
+    }
+
+    // acima do teto do Simples
+    if (r.faturamento === "acima") {
+      f.push({k:"at", b:"Faturamento acima do teto do Simples Nacional",
+        s:"O limite é de R$ 4,8 milhões por ano. Acima disso a empresa é excluída do regime e passa a Lucro Presumido ou Real. A escolha entre os dois muda muito o imposto final e precisa de cálculo, não de palpite."});
+    }
+
+    // situação fiscal
+    if (r.receita === "naosei") {
+      f.push({k:"at", b:"Vale puxar o relatório de situação fiscal",
+        s:"É gratuito e leva minutos no e-CAC. É onde aparecem débitos antigos que ninguém avisou — e que seguem acumulando multa e juros em silêncio."});
+    }
+    if (r.receita === "pendencia") {
+      f.push({k:"at", b:"Pendência em aberto trava a certidão negativa",
+        s:"Sem CND você perde crédito bancário, licitação e contrato com empresa maior. Boa parte dos débitos aceita parcelamento com entrada baixa — e alguns já prescreveram sem que o contribuinte soubesse."});
+    }
+    if (r.receita === "parcelado") {
+      f.push({k:"inf", b:"Parcelamento ativo exige atenção mensal",
+        s:"Atraso em parcela pode romper o acordo e trazer o saldo todo de volta para cobrança. Vale ter o vencimento monitorado por alguém."});
+    }
+
+    // abertura
+    if (r.situacao === "nao_abriu") {
+      f.push({k:"op", b:"Formalizar tende a custar menos do que você imagina",
+        s:"Com CNPJ você emite nota, vende para empresa, acessa crédito PJ e passa a contar tempo de contribuição. O primeiro passo é definir a atividade e o regime — é o que define quanto você vai pagar de imposto pelos próximos anos."});
+      f.push({k:"inf", b:"Atenção ao prazo do Simples Nacional",
+        s:"Empresa nova tem até o último dia útil do mês seguinte à abertura para optar pelo Simples. Perder esse prazo significa ficar no Lucro Presumido até o ano seguinte."});
+    }
+
+    // reforma
+    if (r.preocupacao === "reforma" || r.situacao === "presumido") {
+      f.push({k:"inf", b:"A Reforma Tributária atinge seu regime de forma específica",
+        s:"CBS e IBS substituem PIS, COFINS, ICMS e ISS ao longo da transição. Quem presta serviço e vende para consumidor final tende a sentir mais, porque o crédito na cadeia não compensa. É análise que precisa ser feita caso a caso."});
+    }
+
+    // preocupação: imposto
+    if (r.preocupacao === "imposto" && r.situacao === "simples") {
+      f.push({k:"op", b:"Revisão de anexo e de CNAE costuma render economia",
+        s:"Muita empresa está no anexo errado ou com atividade mal classificada desde a abertura — e paga a mais todo mês sem saber. É uma das primeiras coisas que eu confiro."});
+    }
+
+    // troca de contador
+    if (r.preocupacao === "contador") {
+      f.push({k:"inf", b:"Trocar de contador é mais simples do que parece",
+        s:"Pode ser feito em qualquer mês. Eu solicito a documentação ao escritório anterior, confiro o que está pendente e faço a transição — você só assina a procuração e passa os acessos."});
+    }
+
+    // funcionários
+    if (r.funcionarios === "um" || r.funcionarios === "varios") {
+      f.push({k:"inf", b:"Com funcionário, o calendário fica mais apertado",
+        s:"eSocial, FGTS, DCTFWeb e INSS têm prazos próprios e multa por atraso mesmo quando não há imposto a pagar. É onde mais aparece autuação evitável."});
+    }
+
+    if (f.length === 0) {
+      f.push({k:"op", b:"Sua situação parece organizada",
+        s:"Pelo que você respondeu, não há alerta evidente. Mesmo assim vale uma revisão periódica de enquadramento — é comum a empresa mudar de perfil e a tributação continuar a mesma por anos."});
+    }
+
+    // no máximo 5, priorizando alertas
+    var ordem = {at:0, op:1, inf:2};
+    f.sort(function(a,b){ return ordem[a.k] - ordem[b.k]; });
+    return f.slice(0, 5);
+  }
+
+  var ROTULO = {
+    situacao:{nao_abriu:"ainda não abriu empresa", mei:"MEI", simples:"ME/EPP no Simples", presumido:"Lucro Presumido ou Real"},
+    faturamento:{zero:"ainda não fatura", ate81:"até R$ 81 mil/ano", ate360:"R$ 81 mil a R$ 360 mil/ano", ate4m:"R$ 360 mil a R$ 4,8 mi/ano", acima:"acima de R$ 4,8 mi/ano"},
+    funcionarios:{nenhum:"sem funcionários", um:"1 funcionário", varios:"2 ou mais funcionários", prolab:"apenas o sócio, com pró-labore"},
+    atividade:{servico:"serviços", comercio:"comércio", industria:"indústria", misto:"atividade mista"},
+    receita:{ok:"situação em dia", pendencia:"com pendência em aberto", parcelado:"com parcelamento ativo", naosei:"situação fiscal não verificada"},
+    preocupacao:{imposto:"acha que paga imposto demais", regular:"quer regularizar pendências", abrir:"quer abrir/formalizar", reforma:"preocupado com a Reforma Tributária", contador:"insatisfeito com o contador atual"}
+  };
+
+  function mostrarResultado(){
+    var achados = analisar(resp);
+    var nAlertas = achados.filter(function(x){ return x.k === "at"; }).length;
+
+    document.getElementById("diagResH").textContent =
+      nAlertas > 0
+        ? (nAlertas === 1 ? "1 ponto merece sua atenção" : nAlertas + " pontos merecem sua atenção")
+        : "Boa notícia: nada crítico apareceu";
+
+    document.getElementById("diagResSub").textContent =
+      "Análise preliminar montada a partir das suas respostas. Veja o que identifiquei:";
+
+    var cont = document.getElementById("diagFindings");
+    cont.innerHTML = "";
+    achados.forEach(function(a){
+      var d = document.createElement("div");
+      d.className = "finding " + (a.k === "op" ? "op" : a.k === "inf" ? "inf" : "");
+      var ic = document.createElement("span"); ic.className = "f-ico";
+      var tx = document.createElement("span"); tx.className = "f-tx";
+      var b = document.createElement("b"); b.textContent = a.b;
+      var s = document.createElement("span"); s.textContent = a.s;
+      tx.appendChild(b); tx.appendChild(s);
+      d.appendChild(ic); d.appendChild(tx);
+      cont.appendChild(d);
+    });
+
+    // mensagem do WhatsApp já preenchida
+    var linhas = [
+      "Olá, Marcio! Fiz o diagnóstico no site e gostaria de conversar.",
+      "",
+      "Meu perfil:",
+      "• Situação: " + (ROTULO.situacao[resp.situacao] || "-"),
+      "• Faturamento: " + (ROTULO.faturamento[resp.faturamento] || "-"),
+      "• Equipe: " + (ROTULO.funcionarios[resp.funcionarios] || "-"),
+      "• Atividade: " + (ROTULO.atividade[resp.atividade] || "-"),
+      "• Receita Federal: " + (ROTULO.receita[resp.receita] || "-"),
+      "• Principal preocupação: " + (ROTULO.preocupacao[resp.preocupacao] || "-"),
+      "",
+      "Pontos que apareceram:"
+    ];
+    achados.forEach(function(a){ linhas.push("- " + a.b); });
+
+    document.getElementById("diagWa").href =
+      "https://wa.me/5511964919848?text=" + encodeURIComponent(linhas.join("\n"));
+
+    elQuiz.classList.add("diag-hidden");
+    elRes.classList.remove("diag-hidden");
+    elSteps.style.visibility = "hidden";
+  }
+
+  document.getElementById("diagRedo").addEventListener("click", function(){
+    resp = {}; idx = 0;
+    elRes.classList.add("diag-hidden");
+    elQuiz.classList.remove("diag-hidden");
+    elSteps.style.visibility = "visible";
+    render();
+  });
+
+  render();
+})();
+</script>
 
 </body>
 </html>
