@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada — Tríade M</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="theme-color" content="#05121F">
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;
+    background:#05121F;color:#E9EFF5;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    padding:32px 20px;position:relative;overflow:hidden;
+  }
+  body::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='156'%3E%3Cpath d='M90 8 L172 150 L8 150 Z' fill='none' stroke='%231C3550' stroke-width='1'/%3E%3C/svg%3E");
+    background-size:180px 156px;
+  }
+  .box{position:relative;z-index:1;max-width:520px;text-align:center}
+  .logo{width:min(100%,300px);margin:0 auto 40px;display:block;border-radius:3px}
+  .tri{
+    width:0;height:0;margin:0 auto 22px;
+    border-left:22px solid transparent;border-right:22px solid transparent;
+    border-bottom:38px solid #C9A449;
+  }
+  .code{
+    font-family:ui-monospace,Consolas,monospace;
+    font-size:13px;letter-spacing:.28em;color:#C9A449;
+    text-transform:uppercase;
+  }
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(26px,5vw,36px);line-height:1.2;
+    margin:12px 0 0;color:#fff;text-wrap:balance;
+  }
+  p{
+    margin:16px auto 0;color:#AFC2D2;font-size:16px;
+    line-height:1.65;max-width:42ch;
+  }
+  .acts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px}
+  a.btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 24px;border-radius:4px;text-decoration:none;
+    font-size:15px;font-weight:600;transition:transform .15s ease,background .15s ease,border-color .15s ease;
+  }
+  .p1{background:#C9A449;color:#05121F}
+  .p1:hover{background:#DCBB64;transform:translateY(-2px)}
+  .p2{border:1px solid #35526E;color:#D5E2EC}
+  .p2:hover{border-color:#C9A449;transform:translateY(-2px)}
+  a:focus-visible{outline:2px solid #C9A449;outline-offset:3px}
+  @media (prefers-reduced-motion:reduce){a.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+  <div class="box">
+    <img class="logo" src="/logo.png" alt="Tríade M — Assessoria Contábil">
+    <div class="tri" aria-hidden="true"></div>
+    <p class="code">Erro 404</p>
+    <h1>Esta página não existe</h1>
+    <p>
+      O endereço que você digitou não corresponde a nenhuma página do site.
+      Pode ter sido um link antigo ou um erro de digitação.
+    </p>
+    <div class="acts">
+      <a class="btn p1" href="/">Ir para a página inicial</a>
+      <a class="btn p2" href="https://wa.me/5511964919848">Falar no WhatsApp</a>
+    </div>
+  </div>
+</body>
+</html>
