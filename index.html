@@ -27,6 +27,9 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="theme-color" content="#0A2540">
 
+<!-- Estatísticas anônimas (GoatCounter) — sem cookies, sem dados pessoais -->
+<script data-goatcounter="https://triademcontabil.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -490,7 +493,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
       <a href="#reforma">Reforma Tributária</a>
       <a href="#triade">A Tríade</a>
     </div>
-    <a class="nav-cta" href="https://wa.me/5511964919848">Falar comigo</a>
+    <a class="nav-cta" href="https://wa.me/5511964919848" data-goatcounter-click="wa-nav" data-goatcounter-title="WhatsApp — menu">Falar comigo</a>
   </div>
 </nav>
 
@@ -508,7 +511,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
           prazos, aponto onde você paga imposto a mais e falo com você antes de virar multa.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="https://wa.me/5511964919848">Conversar no WhatsApp</a>
+          <a class="btn btn-primary" href="https://wa.me/5511964919848" data-goatcounter-click="wa-hero" data-goatcounter-title="WhatsApp — topo">Conversar no WhatsApp</a>
           <a class="btn btn-ghost" href="#diagnostico">Fazer diagnóstico gratuito</a>
         </div>
 
@@ -605,7 +608,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
           <p class="diag-res-sub" id="diagResSub"></p>
           <div class="diag-findings" id="diagFindings"></div>
           <div class="diag-cta">
-            <a class="btn btn-primary" id="diagWa" href="#">💬 Falar comigo sobre isso</a>
+            <a class="btn btn-primary" id="diagWa" href="#" data-goatcounter-click="diag-whatsapp" data-goatcounter-title="Diagnóstico — clicou no WhatsApp">💬 Falar comigo sobre isso</a>
             <button class="diag-back" id="diagRedo" type="button">Refazer o diagnóstico</button>
           </div>
           <p class="diag-disc">
@@ -718,7 +721,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
       <span>Simples Nacional também muda</span>
     </div>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="https://wa.me/5511964919848?text=Quero%20entender%20o%20impacto%20da%20Reforma%20Tribut%C3%A1ria%20na%20minha%20empresa">
+      <a class="btn btn-primary" href="https://wa.me/5511964919848?text=Quero%20entender%20o%20impacto%20da%20Reforma%20Tribut%C3%A1ria%20na%20minha%20empresa" data-goatcounter-click="wa-reforma" data-goatcounter-title="WhatsApp — Reforma Tributária">
         Entender o impacto na minha empresa
       </a>
     </div>
@@ -889,8 +892,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
       O diagnóstico inicial é gratuito e sem compromisso.
     </p>
     <div class="hero-ctas">
-      <a class="btn btn-primary" href="https://wa.me/5511964919848">Falar no WhatsApp</a>
-      <a class="btn btn-ghost" href="mailto:marcios.oliveira20@gmail.com">Enviar e-mail</a>
+      <a class="btn btn-primary" href="https://wa.me/5511964919848" data-goatcounter-click="wa-final" data-goatcounter-title="WhatsApp — fechamento">Falar no WhatsApp</a>
+      <a class="btn btn-ghost" href="mailto:marcios.oliveira20@gmail.com" data-goatcounter-click="email-final" data-goatcounter-title="E-mail — fechamento">Enviar e-mail</a>
     </div>
   </div>
 </section>
@@ -907,6 +910,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
       <p class="foot-sign">
         Com carinho, Marcio · Mayara · Matteo
         <small>Tríade M Assessoria Contábil Ltda. · CRC 1SP359733</small>
+        <small>Este site usa estatísticas anônimas, sem cookies e sem dados pessoais.</small>
       </p>
     </div>
     <div>
@@ -926,7 +930,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/5511964919848" aria-label="Falar no WhatsApp">
+<a class="wa-float" href="https://wa.me/5511964919848" aria-label="Falar no WhatsApp" data-goatcounter-click="wa-flutuante" data-goatcounter-title="WhatsApp — botão flutuante">
   <span aria-hidden="true">💬</span><span class="lbl">WhatsApp</span>
 </a>
 
@@ -1015,6 +1019,16 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   var idx = 0;
   var resp = {};
 
+  // evento anônimo no GoatCounter (silencioso se o script não carregar)
+  function gc(evt, titulo){
+    try {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({ path: evt, title: titulo || evt, event: true });
+      }
+    } catch (e) {}
+  }
+  var iniciou = false;
+
   var elSteps = document.getElementById("diagSteps");
   var elQ     = document.getElementById("diagQ");
   var elHint  = document.getElementById("diagHint");
@@ -1088,6 +1102,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   }
 
   elNext.addEventListener("click", function(){
+    if (!iniciou) { iniciou = true; gc("diag-inicio", "Diagnóstico — iniciado"); }
     if (idx < TOTAL - 1) { idx++; render(); }
     else { mostrarResultado(); }
   });
@@ -1206,6 +1221,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   function mostrarResultado(){
     var achados = analisar(resp);
     var nAlertas = achados.filter(function(x){ return x.k === "at"; }).length;
+
+    // só categorias agregadas — nenhum dado que identifique a pessoa
+    gc("diag-concluido", "Diagnóstico — concluído");
+    gc("diag-perfil-" + resp.situacao, "Perfil: " + (ROTULO.situacao[resp.situacao] || resp.situacao));
+    gc("diag-preocupacao-" + resp.preocupacao, "Preocupação: " + (ROTULO.preocupacao[resp.preocupacao] || resp.preocupacao));
 
     document.getElementById("diagResH").textContent =
       nAlertas > 0
